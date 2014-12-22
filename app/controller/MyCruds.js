@@ -14,10 +14,10 @@ Ext.define('DIAS.controller.MyCruds', {
 
     config: {
         refs: {
-			main: 'mainview',
-			navApp: 'mainview #menuapp',
-			listApp: 'mainview #listapp',
-			configPanel: 'mainview #configpanel',
+		 main: 'mainview',
+		 navApp: 'mainview #menuapp',
+		 listApp: 'mainview #listapp',
+		 configPanel: 'mainview #configpanel',
             crudView: 'mainview #panelapp',
             crudNav: 'mainview mycrudlist',
             list: 'mainview mycrudlist #list',
