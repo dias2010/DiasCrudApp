@@ -45,7 +45,7 @@ Ext.define('DIAS.view.MainView', {
                         itemId: 'configpanel',
                         items: [{
                         	xtype: 'label',
-                        	html: '<center>App generica tipo crud utilizada para testar modulos gerados no aplicativo http://www.dias.adm.br/teste/Dias_Crud_Ger/index.html. </p>Acesse o site e gere um modulo para fazer o seu teste. </p>O aplicativo gerador do site possibilita criar tabela e gerar as configuracoes crud para acesso por meio dessa app.</p>Apos gerada sua app ira aparecer na lista de modulos.</p>Caso queira uma copia do codigo fonte para customizar envie e-mail para:</p> dias@dias.adm.br </center>'
+                        	html: '<center>App DiasCrudApp utilizada para testar modulos gerados no aplicativo http://www.dias.adm.br/teste/Dias_Crud_Ger/index.html. </p>Acesse o site e gere um aplicativo para fazer o seu teste. </p>O aplicativo gerador possibilita criar tabela e gerar as configuracoes necessarias para acesso por meio dessa app.</p>Apos gerada, sua app ira aparecer na lista de modulos.</p>Caso queira uma copia do codigo fonte para customizar envie e-mail para:</p> dias@dias.adm.br </center>'
                         },{
                             xtype: 'button',
                             itemId: 'saveconf',
