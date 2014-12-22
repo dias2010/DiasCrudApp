@@ -110,7 +110,7 @@ Ext.define('DIAS.controller.MyCruds', {
                 for (k=0;k<endfields;k++){
         			var item = fields[k];
          			if (k<endfields){
-         				var add_line = '<div><label>'+item+':</label><span>{'+item+'}</span></div>';
+         				var add_line = '<div><label>'+item+':</label><span><font color="#0000FF">{'+item+'}</span></font></div>';
          				new_list += add_line;
         			}else{
         				Ext.Msg.alert('Ok', 'Erro ao montar list');
@@ -196,7 +196,7 @@ Ext.define('DIAS.controller.MyCruds', {
 			var new_field = {	
    				xtype: 'textfield',//op.xtype,
    				name: op.id,
-   				label: op.fieldLabel
+   				label: '<font color="#0000FF">'+op.fieldLabel+':</font>'
 			};
 			me.getFieldset().add(new_field);
 		});    	
