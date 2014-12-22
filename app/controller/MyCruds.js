@@ -194,7 +194,7 @@ Ext.define('DIAS.controller.MyCruds', {
     	var me = this;
         Ext.each(items, function(op) {
 			var new_field = {	
-   				xtype: op.xtype,
+   				xtype: 'textfield',//op.xtype,
    				name: op.id,
    				label: op.fieldLabel
 			};
