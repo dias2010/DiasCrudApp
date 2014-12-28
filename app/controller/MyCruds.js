@@ -120,7 +120,6 @@ Ext.define('DIAS.controller.MyCruds', {
                 item_tpl = [];                 
                 item_tpl = [line_init+new_list+line_end];
 
-                //Chamada da Funcao para Popular List 
                 me.listData(tablename, fields, chave, item_tpl, items, urlapp);
                 
         	}else{
