@@ -135,7 +135,7 @@ Ext.define('DIAS.controller.MyCruds', {
     	var me = this;
     	var campos = Ext.encode(fields);
 		var url = urlapp+'config/php/Select.php'; 	
-        var mdList = null;
+        var mdList = "";
 		mdList = Ext.define('DIAS.model.MyModelList',{extend: 'Ext.data.Model', config:{fields: fields}});
 		var stores = Ext.create('DIAS.store.MyJsonStoreList', {extend: 'Ext.data.Store', config: {model: mdList, fields: fields}});
 			stores.getProxy().setUrl(url);
@@ -178,7 +178,7 @@ Ext.define('DIAS.controller.MyCruds', {
     	});
 	},
     
-    // Show details
+    //Show details
     selectRecord: function(dataview, index, target, record, e, eOpts){
     	var me = this;
     	var title = '['+app+']-Detalhes';
