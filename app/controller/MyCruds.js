@@ -14,10 +14,10 @@ Ext.define('DIAS.controller.MyCruds', {
 
     config: {
         refs: {
-		 main: 'mainview',
-		 navApp: 'mainview #menuapp',
-		 listApp: 'mainview #listapp',
-		 configPanel: 'mainview #configpanel',
+			main: 'mainview',
+			navApp: 'mainview #menuapp',
+			listApp: 'mainview #listapp',
+			configPanel: 'mainview #configpanel',
             crudView: 'mainview #panelapp',
             crudNav: 'mainview mycrudlist',
             list: 'mainview mycrudlist #list',
@@ -79,7 +79,7 @@ Ext.define('DIAS.controller.MyCruds', {
     },
     
     
-    //*Carrega dados da app escolhida
+    //*Carrega dados da app escolhida store autoload
     selectApp: function(dataview, index, target, record, e, eOpts) {   
     	var me = this;
     	var tab = record.get('table'); 
@@ -96,7 +96,7 @@ Ext.define('DIAS.controller.MyCruds', {
         		var columns = [];
         	   	fields = [];
         	   	items = [];
-                var tablename = dataApp.tablename;
+                tablename = dataApp.tablename;
                 var chave = dataApp.chave; 
                 var columns = dataApp.columns;
                 fields = dataApp.fields;
@@ -104,7 +104,7 @@ Ext.define('DIAS.controller.MyCruds', {
  
                 //build list itemtpl
                 var endfields = fields.length;
-                var new_list = "";
+                var new_list = '';
                 var line_init = '<div>';
                 var line_end = '</div>';
                 for (k=0;k<endfields;k++){
@@ -156,8 +156,9 @@ Ext.define('DIAS.controller.MyCruds', {
 	
 	//adiciona dataview
 	addListView: function(dataview, index, target, record, e, eOpts){
-		this.getNavApp().hide();
-		this.getCrudView().add({
+		var me = this;
+		me.getNavApp().hide();
+		me.getCrudView().add({
 			xtype:'mycrudlist',
 			itemId: 'mylist'
 		});
@@ -165,8 +166,9 @@ Ext.define('DIAS.controller.MyCruds', {
 	
 	//adiciopna list
 	addList: function(item_tpl, stores){
+		var me = this;
 		var title = '['+app+']-Listando';
-		this.getCrudNav().push({
+		me.getCrudNav().push({
     		xtype: 'list',
     		title: title,
     	    itemId: 'list',
@@ -233,9 +235,70 @@ Ext.define('DIAS.controller.MyCruds', {
         insert = false;
     },
 
-    save: function() {
+    save: function() { 
+    	var me = this;
+		var valores = [];
+		var form = this.getCrudForm();
+		var key = fields[0];
+		valores = form.getValues();
+		
+		//if(form.getForm().isValid()){
+		
+		   //INSERT
+		   if (insert === true){			 
+			 var val1 = '';
+		  	 Ext.Ajax.request({
+			    url: urlapp+'config/php/Insert.php',
+			    method: 'POST',
+				params: {
+					Tablename: tablename,
+					Chave: key,
+					Field1: key,
+	  	 			Val1: val1,    	  	 				 
+	  	 			Fields: Ext.encode(fields),
+	  	 			Valores: Ext.encode(valores),
+	  	 			Length: fields.length
+	  	 		},
+				success: function(){
 
-		//Atualiza list view 
+				},
+				failure: function(){
+					
+				},
+				scope: this
+			})
+		  }//fim insert
+		   
+		  //UPDATE
+		   if (insert === false){
+			    var record = me.getList().getSelection()[0];  
+				var val1 = record.data['id'];
+				Ext.Ajax.request({
+				    url: urlapp+'config/php/Update.php',
+				    method: 'POST',
+					params: {
+						Tablename: tablename,
+						Chave: key,
+						Field1: key,
+ 	  	 				Val1: val1,    	  	 				 
+ 	  	 				Fields: Ext.encode(fields),
+ 	  	 				Valores: Ext.encode(valores),
+ 	  	 				Length: fields.length
+ 	  	 			},
+					success: function(){
+
+					},
+					failure: function(){
+
+					},
+					scope: this
+				})
+		  }		   
+	  //}else{
+		  //Ext.Msg.alert('Atencao', 'Existem campos invalidos.');
+	  //}	   
+
+	  //Atualiza list view 
         var form = this.getCrudForm(),
             record = form.getRecord(),
             store = Ext.getStore('MyJsonStoreList');
@@ -267,13 +330,35 @@ Ext.define('DIAS.controller.MyCruds', {
         // Show confirmation message
         Ext.Msg.confirm(title, message, function(response) {
             if (response == 'yes') {
+            	// Remove record do db
+            	var key = fields[0];
+			    var record = me.getList().getSelection()[0];  
+				var val1 = record.data['id'];
+				Ext.Ajax.request({
+				    url: urlapp+'config/php/Delete.php',
+				    method: 'GET',
+					params: {
+						Tablename: tablename,
+						Chave: key,
+						Field1: key,
+ 	  	 				Val1: val1
+ 	  	 			},
+					success: function(){
 
-                // Remove record
+					},
+					failure: function(){
+
+					},
+					scope: this
+				})
+		  
+                // Remove record da view
                 var store = Ext.getStore('MyJsonStoreList'),
                     record = me.getList().getSelection()[0];
                 store.remove(record);
 
                 // Back to list view
+                store.sync();
                 me.getCrudNav().reset();
 
             }
